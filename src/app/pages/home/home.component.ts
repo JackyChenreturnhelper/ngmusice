@@ -4,7 +4,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HomeService } from 'src/app/service/home.service';
 import { BannerInterface } from 'src/app/interface/banner-interface';
 
+
 import { NzCarouselComponent } from 'ng-zorro-antd';
+import { SingerInterface } from 'src/app/interface/singer-interface';
+import { SingerService } from 'src/app/service/singer.service';
 
 @Component({
   selector: 'app-home',
@@ -17,12 +20,14 @@ export class HomeComponent implements OnInit {
 
   public bannerlist: BannerInterface[ ];
   public hotTags: HottagInterface[];
-  public songSheetList: SongSheetInterface []
+  public songSheetList: SongSheetInterface [];
+  public singers: SingerInterface[];
   carouselActiveIndex = 0;
-  constructor(private homeServe: HomeService) {
+  constructor(private homeServe: HomeService, private singerServe: SingerService) {
     this.getBanners();
     this.getHotTags();
     this.getPersonalizedSheetList();
+    this.getEnterSingers();
   }
 
   private getBanners() {
@@ -38,6 +43,12 @@ export class HomeComponent implements OnInit {
   private getPersonalizedSheetList() {
     this.homeServe.getPerosonalSheetList().subscribe(sheets => {
       this.songSheetList = sheets;
+    });
+  }
+
+  private getEnterSingers() {
+    this.singerServe.getEnterSinger().subscribe(singers => {
+      this.singers = singers;
     });
   }
 

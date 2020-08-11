@@ -1,10 +1,6 @@
 <div class="home">
   <app-carousel #wyCarousel [activeIndex]="carouselActiveIndex" (changeSlide)="onChangeSlide($event)">
-    <nz-carousel
-    nzAutoPlay
-    nzEffect="fade"
-    [nzDotRender]="wyCarousel.dotRef"
-    (nzBeforeChange)="onBeforeChange($event)">
+    <nz-carousel nzAutoPlay nzEffect="fade" [nzDotRender]="wyCarousel.dotRef" (nzBeforeChange)="onBeforeChange($event)">
       <div class="carousel-item" nz-carousel-content *ngFor="let item of bannerlist">
         <a [href]="item.url" target="_blank" class="banner-item">
           <img [src]="item.imageUrl" />
@@ -36,10 +32,7 @@
 
           <div class="down">
             <div class="down-wrap">
-              <app-single-sheet  class="sheet-item"
-              *ngFor="let item of songSheetList"
-                [sheet]="item"
-              >
+              <app-single-sheet class="sheet-item" *ngFor="let item of songSheetList" [sheet]="item">
 
               </app-single-sheet>
             </div>
@@ -49,7 +42,24 @@
 
 
 
-      <div class="right">right</div>
+      <div class="right">
+
+        <app-member-card></app-member-card>
+        <div class="settled-singer">
+          <div class="tit"><b>入駐歌手</b></div>
+          <div class="list">
+            <div class="card" *ngFor="let item of singers">
+              <div class="pic">
+                <img [src]="item.picUrl" [alt]="item.name">
+              </div>
+              <div class="txt">
+                <b class="ellipsis">{{item.name}}</b>
+                <span>專輯數：{{item.albumSize}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
