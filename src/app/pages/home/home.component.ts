@@ -10,6 +10,7 @@ import { SingerInterface } from 'src/app/interface/singer-interface';
 import { SingerService } from 'src/app/service/singer.service';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/internal/operators';
+import { SheetService } from 'src/app/service/sheet.service';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,9 @@ export class HomeComponent implements OnInit {
     /*
     private homeServe: HomeService,
     private singerServe: SingerService,*/
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private sheetServe: SheetService
+    ) {
       this.route.data.pipe(map(res => res.homeDatas)).subscribe(([banners, hotTags, songSheetList, singers]) => {
         this.bannerlist = banners;
         this.hotTags = hotTags;
@@ -69,5 +72,11 @@ export class HomeComponent implements OnInit {
 
   onChangeSlide(type: 'pre' | 'next') {
     this.nzCarousel[type]();
+  }
+  onPlaySheet(id: number){
+    console.log('id :', id);
+    this.sheetServe.playSheet(id).subscribe(res => {
+      console.log('res :', res);
+    });
   }
 }
