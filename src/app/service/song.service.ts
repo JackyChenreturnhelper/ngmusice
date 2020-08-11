@@ -19,7 +19,7 @@ export class SongService {
     .pipe(map((res: { data: SongUrlInterface[] }) => res.data));
   }
 
-
+/*
   getSongList(songs: SongInterface | SongInterface[]): Observable<SongInterface[]> {
     const songArr = Array.isArray(songs) ? songs.slice() : [songs];
     const ids = songArr.map(item => item.id).join(',');
@@ -28,6 +28,12 @@ export class SongService {
         observer.next(this.generateSongList(songArr, urls));
       });
     });
+  }
+*/
+  getSongList(songs: SongInterface | SongInterface[]): Observable<SongInterface[]> {
+    const songArr = Array.isArray(songs) ? songs.slice() : [songs];
+    const ids = songArr.map(item => item.id).join(',');
+    return this.getSongUrl(ids).pipe(map(urls => this.generateSongList(songArr, urls)));
   }
 
 
