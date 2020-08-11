@@ -8,6 +8,8 @@ import { BannerInterface } from 'src/app/interface/banner-interface';
 import { NzCarouselComponent } from 'ng-zorro-antd';
 import { SingerInterface } from 'src/app/interface/singer-interface';
 import { SingerService } from 'src/app/service/singer.service';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-home',
@@ -23,13 +25,19 @@ export class HomeComponent implements OnInit {
   public songSheetList: SongSheetInterface [];
   public singers: SingerInterface[];
   carouselActiveIndex = 0;
-  constructor(private homeServe: HomeService, private singerServe: SingerService) {
-    this.getBanners();
-    this.getHotTags();
-    this.getPersonalizedSheetList();
-    this.getEnterSingers();
+  constructor(
+    /*
+    private homeServe: HomeService,
+    private singerServe: SingerService,*/
+    private route: ActivatedRoute) {
+      this.route.data.pipe(map(res => res.homeDatas)).subscribe(([banners, hotTags, songSheetList, singers]) => {
+        this.bannerlist = banners;
+        this.hotTags = hotTags;
+        this.songSheetList = songSheetList;
+        this.singers = singers;
+      });
   }
-
+/*
   private getBanners() {
     this.homeServe.getBanners().subscribe(observer => {
       this.bannerlist = observer;
@@ -51,11 +59,9 @@ export class HomeComponent implements OnInit {
       this.singers = singers;
     });
   }
-
+*/
 
   ngOnInit() {
-
-
   }
   onBeforeChange({ to }) {
     this.carouselActiveIndex = to;
