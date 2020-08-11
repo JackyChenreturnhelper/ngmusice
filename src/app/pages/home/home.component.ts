@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HomeService } from 'src/app/service/home.service';
 import { BannerInterface } from 'src/app/interface/banner-interface';
+import { NzCarouselComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +10,10 @@ import { BannerInterface } from 'src/app/interface/banner-interface';
 })
 export class HomeComponent implements OnInit {
 
-  private bannerlist: BannerInterface[]
+  @ViewChild(NzCarouselComponent, { static: true }) private nzCarousel: NzCarouselComponent;
+
+  public bannerlist: BannerInterface[ ];
+  carouselActiveIndex = 0;
   constructor(private homeServe: HomeService) {
 
   }
@@ -18,6 +22,13 @@ export class HomeComponent implements OnInit {
    this.homeServe.getBanners().subscribe(observer => {
     this.bannerlist = observer;
    });
+   console.log(this.bannerlist);
+  }
+  onBeforeChange({ to }) {
+    this.carouselActiveIndex = to;
   }
 
+  onChangeSlide(type: 'pre' | 'next') {
+    this.nzCarousel[type]();
+  }
 }

@@ -9,11 +9,9 @@ import { map } from 'rxjs/internal/operators';
 })
 export class HomeService {
 
-  constructor(private http: HttpClient ,@Inject(API_CONFIG) private uri: string) { }
+  constructor(private http: HttpClient , @Inject(API_CONFIG) private uri: string) { }
 
-  getBanners(): Observable<BannerInterface[]>
-  {
-
+  getBanners(): Observable<BannerInterface[]> {
    const data = this.http.get(this.uri + 'banner').pipe(
      map((res: { banners: BannerInterface[] }) => res.banners));
 
